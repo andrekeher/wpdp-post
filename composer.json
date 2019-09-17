@@ -1,0 +1,17 @@
+{
+    "name": "andrekeher/wpdp-post",
+    "description": "Helps in a new post type creation in Wordpress.",
+    "homepage": "https://github.com/andrekeher/wpdp-post",
+	"keywords": [
+        "wordpress",
+        "post"
+    ],
+	"type": "plugin",
+    "license": "MIT",
+    "require": {},
+	"autoload": {
+		"psr-4": {
+			"AndreKeher\\WPDP\\" : "src/"
+		}
+	}
+}
