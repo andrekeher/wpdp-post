@@ -1,4 +1,5 @@
 <?php
+
 namespace AndreKeher\WPDP;
 
 class Post
@@ -13,7 +14,7 @@ class Post
     private $hierarchical;
     private $taxonomies;
 
-    public function __construct($postType, $slug, $name, $singularName, $pluralName, $description = '', $hierarchical = false, $taxonomies = array())
+    public function __construct($postType, $slug, $name, $singularName, $pluralName, $description = '', $hierarchical = false, $taxonomies = [])
     {
         $this->postType = $postType;
         $this->slug = $slug;
@@ -29,7 +30,7 @@ class Post
 
     private function config()
     {
-        $labels = array(
+        $labels = [
             'name' => $this->name,
             'singular_name' => $this->singularName,
             'menu_name' => $this->pluralName,
@@ -57,26 +58,26 @@ class Post
             'items_list' => 'Lista de itens',
             'items_list_navigation' => 'Navegação da lista de itens',
             'filter_items_list' => 'Lista de itens de filtro',
-            );
+        ];
 
-        $rewrite = array(
+        $rewrite = [
             'slug' => $this->slug,
             'with_front' => true,
             'pages' => true,
             'feeds' => true,
-            );
+        ];
 
-        $this->args = array(
+        $this->args = [
             'label' => $this->singularName,
             'description' => $this->description,
             'labels' => $labels,
-            'supports' => array(
+            'supports' => [
                 'title',
                 'editor',
                 'excerpt',
                 'thumbnail',
                 'comments',
-                ),
+            ],
             'taxonomies' => $this->taxonomies,
             'hierarchical' => $this->hierarchical,
             'public' => true,
@@ -91,18 +92,18 @@ class Post
             'publicly_queryable' => true,
             'rewrite' => $rewrite,
             'capability_type' => 'post',
-            'capabilities' => array(),
-            );
+            'capabilities' => [],
+        ];
     }
 
     public function init()
     {
         add_action('init', function () {
-            register_post_type($this->postType, $this->args); 
+            register_post_type($this->postType, $this->args);
         }, 0);
         return $this->postType;
     }
-    
+
     public function getArgs($key = '')
     {
         if (!empty($key) && isset($this->args[$key])) {
