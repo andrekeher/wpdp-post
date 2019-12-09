@@ -13,6 +13,7 @@ class Post
     private $description;
     private $hierarchical;
     private $taxonomies;
+    private $redirectSingleToArchive = false;
 
     public function __construct($postType, $slug, $name, $singularName, $pluralName, $description = '', $hierarchical = false, $taxonomies = [])
     {
@@ -101,6 +102,17 @@ class Post
         add_action('init', function () {
             register_post_type($this->postType, $this->args);
         }, 0);
+
+        add_action('template_redirect', function () {
+            if (! $this->redirectSingleToArchive) {
+                return false;
+            }
+            if (is_singular($this->postType)) {
+                wp_redirect(get_post_type_archive_link($this->postType), 301);
+                die;
+            }
+        });
+
         return $this->postType;
     }
 
@@ -115,5 +127,10 @@ class Post
     public function setArgs($key, $value)
     {
         $this->args[$key] = $value;
+    }
+
+    public function setredirectSingleToArchive($value)
+    {
+        $this->redirectSingleToArchive = $value;
     }
 }
